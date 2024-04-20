@@ -31,7 +31,6 @@ public class RingSpinner implements SpinnerRender {
 
     @Override
     public void paintCompleteIndeterminate(Graphics2D g2, Component component, Rectangle rec, float last, float f, float p) {
-        System.out.println(completeIndeterminateColor.toString());
         if (completeIndeterminateColor == null) completeIndeterminateColor = component.getBackground();
         g2.setColor(completeIndeterminateColor);
         g2.fill(createShape(rec, 0, 360));
