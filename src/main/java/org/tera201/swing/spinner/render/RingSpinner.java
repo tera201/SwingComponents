@@ -11,6 +11,9 @@ import java.awt.geom.Point2D;
 public class RingSpinner implements SpinnerRender {
 
     private final int size;
+    private Color determinateColor;
+    private Color indeterminateColor;
+    private Color completeIndeterminateColor;
 
     public RingSpinner(int size) {
         this.size = size;
@@ -28,7 +31,9 @@ public class RingSpinner implements SpinnerRender {
 
     @Override
     public void paintCompleteIndeterminate(Graphics2D g2, Component component, Rectangle rec, float last, float f, float p) {
-        g2.setColor(component.getBackground());
+        System.out.println(completeIndeterminateColor.toString());
+        if (completeIndeterminateColor == null) completeIndeterminateColor = component.getBackground();
+        g2.setColor(completeIndeterminateColor);
         g2.fill(createShape(rec, 0, 360));
         Point2D lastPoint = getPoint(last);
         double target = p * 360;
@@ -42,7 +47,8 @@ public class RingSpinner implements SpinnerRender {
     @Override
     public void paintIndeterminate(Graphics2D g2, Component component, Rectangle rec, float f) {
         Point2D p = getPoint(f);
-        g2.setColor(component.getBackground());
+        if (indeterminateColor == null) indeterminateColor = component.getBackground();
+        g2.setColor(indeterminateColor);
         g2.fill(createShape(rec, 0, 360));
         Shape shape = createShape(rec, p.getX(), p.getY());
         g2.setColor(component.getForeground());
@@ -51,7 +57,8 @@ public class RingSpinner implements SpinnerRender {
 
     @Override
     public void paintDeterminate(Graphics2D g2, Component component, Rectangle rec, float p) {
-        g2.setColor(component.getBackground());
+        if (determinateColor == null) determinateColor = component.getBackground();
+        g2.setColor(determinateColor);
         g2.fill(createShape(rec, 0, 360));
         g2.setColor(component.getForeground());
         g2.fill(createShape(rec, 0, (p * 360)));
@@ -60,6 +67,13 @@ public class RingSpinner implements SpinnerRender {
     @Override
     public int getInsets() {
         return UIScale.scale(size + 5);
+    }
+
+    @Override
+    public void setColor(Color determinate, Color indeterminate, Color completeIndeterminate) {
+        determinateColor = determinate;
+        indeterminateColor = indeterminate;
+        completeIndeterminateColor = completeIndeterminate;
     }
 
     private Shape createShape(Rectangle rec, double start, double end) {

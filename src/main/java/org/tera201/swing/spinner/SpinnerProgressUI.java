@@ -20,6 +20,9 @@ public class SpinnerProgressUI extends FlatProgressBarUI {
     private float lastAnimator;
     private float animateFrame;
     private boolean moreAnimation;
+    private Color determinateColor;
+    private Color indeterminateColor;
+    private Color completeIndeterminateColor;
 
     private final Rectangle iconRect = new Rectangle();
     private final Rectangle textRect = new Rectangle();
@@ -27,8 +30,12 @@ public class SpinnerProgressUI extends FlatProgressBarUI {
     private int thickness = 10;
 
     SpinnerProgressUI() {}
-    SpinnerProgressUI(int thickness) {
+    SpinnerProgressUI(Color determinate, Color indeterminate, Color completeIndeterminate) {
+        setIndicatorColor(determinate, indeterminate, completeIndeterminate);
+    }
+    SpinnerProgressUI(int thickness, Color determinate, Color indeterminate, Color completeIndeterminate) {
         this.thickness = thickness;
+        setIndicatorColor(determinate, indeterminate, completeIndeterminate);
     }
 
     @Override
@@ -36,6 +43,7 @@ public class SpinnerProgressUI extends FlatProgressBarUI {
         super.installDefaults();
         progressBar.setOpaque(true);
         render = new RingSpinner(thickness);
+        render.setColor(determinateColor, indeterminateColor, completeIndeterminateColor);
     }
 
     @Override
@@ -54,12 +62,18 @@ public class SpinnerProgressUI extends FlatProgressBarUI {
         progressBar.addPropertyChangeListener(propertyChangeListener);
     }
 
+    public void setIndicatorColor(Color determinate, Color indeterminate, Color completeIndeterminate) {
+        determinateColor = determinate;
+        indeterminateColor = indeterminate;
+        completeIndeterminateColor = completeIndeterminate;
+    }
+
     private void checkIndeterminate(PropertyChangeEvent evt) {
         boolean oldValue = (boolean) evt.getOldValue();
         boolean newValue = (boolean) evt.getNewValue();
         if (oldValue && !newValue) {
             if (animator == null) {
-                animator = new Animator(350, new Animator.TimingTarget() {
+                animator = new Animator(1000, new Animator.TimingTarget() {
                     @Override
                     public void begin() {
                         moreAnimation = true;
@@ -72,7 +86,7 @@ public class SpinnerProgressUI extends FlatProgressBarUI {
 
                     @Override
                     public void timingEvent(float f) {
-                        animateFrame = f;
+                        animateFrame = (float) Math.sqrt(f);
                         progressBar.repaint();
                     }
                 });
@@ -121,10 +135,10 @@ public class SpinnerProgressUI extends FlatProgressBarUI {
 
         if ((icon == null) && ((text == null) || ((text != null) && (font == null)))) {
             int add = UIScale.scale(20);
-            return new Dimension(dx + add, dy + add);
+            return new Dimension(dx + add + space, dy + add + space);
         } else if ((text == null) || ((icon != null) && (font == null))) {
             int add = UIScale.scale(spinner.getSpace()) * 2;
-            return new Dimension(icon.getIconWidth() + dx + add, icon.getIconHeight() + dy + add);
+            return new Dimension(icon.getIconWidth() + dx + add + space, icon.getIconHeight() + dy + add + space);
         } else {
             FontMetrics fm = spinner.getFontMetrics(font);
             Rectangle iconR = new Rectangle();

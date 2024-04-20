@@ -14,4 +14,5 @@ public interface SpinnerRender {
     public void paintDeterminate(Graphics2D g2, Component component, Rectangle rec, float p);
 
     public int getInsets();
+    public void setColor(Color color1, Color color2, Color color3);
 }

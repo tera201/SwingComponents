@@ -1,6 +1,7 @@
 package org.tera201.swing.spinner;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class SpinnerProgress extends JProgressBar {
 
@@ -25,12 +26,23 @@ public class SpinnerProgress extends JProgressBar {
     }
 
     public SpinnerProgress(int space, Integer thickness) {
-        init(thickness);
+        init(thickness, null, null, null);
+        this.space = space;
+    }
+
+    public SpinnerProgress(int space, Integer thickness, Color determinate, Color indeterminate, Color completeIndeterminate) {
+        init(thickness, determinate, indeterminate, completeIndeterminate);
         this.space = space;
     }
 
     public SpinnerProgress(Icon icon, int space, Integer thickness) {
-        init(thickness);
+        init(thickness, null, null, null);
+        this.icon = icon;
+        this.space = space;
+    }
+
+    public SpinnerProgress(Icon icon, int space, Integer thickness, Color determinate, Color indeterminate, Color completeIndeterminate) {
+        init(thickness, determinate, indeterminate, completeIndeterminate);
         this.icon = icon;
         this.space = space;
     }
@@ -41,11 +53,13 @@ public class SpinnerProgress extends JProgressBar {
         setUI(new SpinnerProgressUI());
     }
 
-    private void init(Integer thickness) {
+    private void init(Integer thickness, Color determinate, Color indeterminate, Color completeIndeterminate) {
         if ((thickness != null)) {
-            setUI(new SpinnerProgressUI(thickness));
+            SpinnerProgressUI spinnerProgressUI = new SpinnerProgressUI(thickness, determinate, indeterminate, completeIndeterminate);
+            setUI(spinnerProgressUI);
         } else {
-            setUI(new SpinnerProgressUI());
+            SpinnerProgressUI spinnerProgressUI = new SpinnerProgressUI(determinate, indeterminate, completeIndeterminate);
+            setUI(spinnerProgressUI);
         }
     }
 
