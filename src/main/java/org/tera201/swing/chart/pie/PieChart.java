@@ -63,9 +63,12 @@ public class PieChart extends JPanel {
         labelNoData = new JLabel("Empty Data", new FlatSVGIcon("com/raven/chart/empty.svg"), JLabel.CENTER);
         labelNoData.setHorizontalTextPosition(SwingConstants.CENTER);
         labelNoData.setVerticalTextPosition(SwingConstants.BOTTOM);
+        scrollpanelLegend = new JScrollPane(panelLegend);
+        scrollpanelLegend.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollpanelLegend.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         layeredPane.add(panelHeader);
         layeredPane.add(panelRender, "width 150:250,height 150:250,split 2");
-        layeredPane.add(panelLegend);
+        layeredPane.add(scrollpanelLegend);
         layeredPane.add(panelFooter);
         initPopupComponent();
         updateDataset();
@@ -160,6 +163,7 @@ public class PieChart extends JPanel {
     private PanelRender panelRender;
     private JPanel panelHeader;
     private JPanel panelFooter;
+    private JScrollPane scrollpanelLegend;
     private JPanel panelLegend;
     protected PieLabelPopup popupComponents;
     private JLabel labelNoData;
