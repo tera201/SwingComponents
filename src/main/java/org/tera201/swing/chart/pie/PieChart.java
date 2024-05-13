@@ -74,6 +74,10 @@ public class PieChart extends JPanel {
         updateDataset();
     }
 
+    public void visibleLegend(boolean visible) {
+        scrollpanelLegend.setVisible(visible);
+    }
+
     public void startAnimation() {
         panelRender.animator.start();
     }

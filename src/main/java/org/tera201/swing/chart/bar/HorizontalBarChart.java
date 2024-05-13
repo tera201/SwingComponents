@@ -17,7 +17,7 @@ import java.util.List;
 
 public class HorizontalBarChart extends JPanel {
 
-    protected NumberFormat valuesFormat = new DecimalFormat("$ #,##0.00");
+    private NumberFormat valuesFormat = new DecimalFormat("#,##0.##");
     private DefaultPieDataset<String> dataset = new SimpleDataBarChart();
     private Color barColor = new Color(40, 139, 78);
     protected ChartAnimator animator;
@@ -51,6 +51,10 @@ public class HorizontalBarChart extends JPanel {
         layeredPane.add(panelRender);
         layeredPane.add(panelFooter);
         updateDataset();
+    }
+
+    public void setValuesFormat(NumberFormat format) {
+        valuesFormat = format;
     }
 
     private void initAnimator() {
