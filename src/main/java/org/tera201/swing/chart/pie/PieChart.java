@@ -125,6 +125,7 @@ public class PieChart extends JPanel {
         } else {
             noData(true);
         }
+        panelRender.imageUpdated = false;
         panelLegend.revalidate();
         repaint();
     }
