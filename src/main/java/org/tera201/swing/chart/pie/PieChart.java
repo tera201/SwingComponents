@@ -67,7 +67,8 @@ public class PieChart extends JPanel {
         scrollpanelLegend.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollpanelLegend.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         layeredPane.add(panelHeader);
-        layeredPane.add(panelRender, "width 150:250,height 150:250,split 2");
+        //TODO this params shouldn't be hardcoded
+        layeredPane.add(panelRender, "width 150:500,height 150:500,split 2");
         layeredPane.add(scrollpanelLegend);
         layeredPane.add(panelFooter);
         initPopupComponent();
