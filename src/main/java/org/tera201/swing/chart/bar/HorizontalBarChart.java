@@ -117,12 +117,18 @@ public class HorizontalBarChart extends JPanel {
     private JPanel panelHeader;
     private JPanel panelFooter;
     private JLabel labelNoData;
+    private Component header;
 
     public void setHeader(Component component) {
         panelHeader.removeAll();
         panelHeader.add(component);
         panelHeader.revalidate();
         panelHeader.repaint();
+        header = component;
+    }
+
+    public Component getHeader() {
+        return header;
     }
 
     public void setFooter(Component component) {
