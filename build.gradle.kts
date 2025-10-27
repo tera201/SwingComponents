@@ -14,8 +14,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.formdev:flatlaf:3.4.1")
-    implementation("com.formdev:flatlaf-extras:3.4.1")
-    implementation("com.miglayout:miglayout-swing:11.3")
-    testImplementation("com.formdev:flatlaf-fonts-roboto:2.137")
+    implementation(libs.bundles.flatlaf)
+    testImplementation(libs.flatlaf.fronts)
+    implementation(libs.miglayout)
 }
